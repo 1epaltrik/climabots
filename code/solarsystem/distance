@@ -1,0 +1,36 @@
+
+int trigPin = 12;    // Trigger
+int echoPin = 11;    // Echo
+long duration, cm, inches;
+ 
+void setup() {
+  //Αρχικοποίηση σειριακής 
+  Serial.begin (9600);
+  //ΟΡΙΣΜΟΣ ΣΗΜΕΙΩΝ ΕΙΣΟΔΟΥ-ΕΞΟΔΟΥ
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+ 
+void loop() {
+  // Ο αισθητήρας ενεργοποιείται από ψηλο παλμό 10 ή περισσότερων μικροδευτερολέπτων
+  // Δινει ένα σύντομο παλμό χαμηλού επιπέδου για να εξασφαλισθεί καθαρός ψηλος παλμός
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  
+  // Διαβάζει το σήμα από τον αισθητήρα: ένας υψηλός παλμό του οποίου
+  // η διάρκεια είναι ο χρόνος (σε μικροδευτερόλεπτα) από την αποστολή
+  // του ping μέχρι τη λήψη της ηχώ από ένα αντικείμενο-εμποδιο.
+
+  pinMode(echoPin, INPUT);
+  duration = pulseIn(echoPin, HIGH);
+ 
+  // Μετατροπη χρόνου σε απόσταση
+  cm = (duration/2) / 29.1;     // ΔΙΑΙΡΕΣΗ ΜΕ 29.1 Η ΠΟΛΛΑΠΛΑΣΙΑΣΜΟΣ ΜΕ 0.0343
+  Serial.print("Αποσταση: ");
+  Serial.print(cm);
+  Serial.println("cm");
+  delay(250);
+}
