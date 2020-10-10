@@ -1,0 +1,46 @@
+int trigPin = 12;    // Trigger
+//Ανάβει ένα LED σε περίπτωση που υπάρχει αντικείμενο σε απόσταση<20cm
+int echoPin = 11;    // Echo
+int led = 13;   //Φωτισμος
+long duration, cm, inches;
+ 
+void setup() {
+  //Αρχικοποηση σειριακης 
+  Serial.begin (9600);
+  //ΟΡΙΣΜΟΣ ΣΗΜΕΙΩΝ ΕΙΣΟΔΟΥ-ΕΞΟΔΟΥ
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+}
+ 
+void loop() {
+  // Ο αισθητήρας ενεργοποιείται από ψηλο παλμό 10 ή περισσότερων μικροδευτερολέπτων
+  // Δινει ένα σύντομο παλμό χαμηλού επιπέδου για να εξασφαλισθει καθαρός ψηλος παλμός
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  
+  // Διαβάζει το σήμα από τον αισθητήρα: ένας υψηλός παλμό του οποίου
+  // η διάρκεια είναι ο χρόνος (σε μικροδευτερόλεπτα) από την αποστολή
+  // του ping μεχρι τη λήψη της ηχώ από ένα αντικείμενο-εμποδιο.
+
+  pinMode(echoPin, INPUT);
+  duration = pulseIn(echoPin, HIGH);
+ 
+  // Μετατροπη χρόνου σε απόσταση
+  cm = (duration/2) / 29.1;     // ΔΙΑΙΡΕΣΗ ΜΕ 29.1 Η ΠΟΛΛΑΠΛΑΣΙΑΣΜΟΣ ΜΕ 0.0343
+  //Ελεγχει αν διερχεται αντικειμενο σε αποσταση μκροτερη απο 20cm
+  if (cm<20)
+  {
+      digitalWrite(led, HIGH);//Αναβει ο φωτισμος
+  }
+  else
+  {
+      digitalWrite(led, LOW);//Σβηνει ο φωτισμος
+  }
+  Serial.print("Αποσταση: ");
+  Serial.print(cm);
+  Serial.println("cm");
+  delay(250);
+}
