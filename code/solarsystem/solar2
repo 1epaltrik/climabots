@@ -1,0 +1,89 @@
+//Συνδυασμός φωτοβολταϊκού και αισθητήρα απόστασης
+#include <Servo.h> 
+Servo servo; // Δημιουργία ενός αντικειμένου servo για τον έλεγχο του κινητήρα servo 
+int eLDRPin = A0; // Εκχώρηση pins στις φωτοαντιστάσεις 
+int wLDRPin = A1; 
+int eastLDR = 0; //Δημιουργία μεταβλητών για αποθήκευση τιμών φωτοαντιστάσεων
+int westLDR = 0;
+int difference = 0; // Δημιουργία μεταβλητής για σύγκριση των τιμών των φωτοαντιστάσεων 
+int error = 10; // Μεταβλητή για εάν υπάρχει αξιοσημείωτη διαφορά μεταξύ των δύο φωτοαντιστάσεων
+int servoSet = 130; //Variable for position of servo - will be different for each device 
+int trigPin = 12;    // Trigger
+int echoPin = 11;    // Echo
+int led = 10;   //Φωτισμος
+long duration, cm, inches;
+
+void setup() { 
+  servo.attach(9); // συνδέει το αντικείμενο servo στον ακροδέκτη της φωτοαντίστασης
+  //Αρχικοποηση σειριακης 
+  Serial.begin (9600);
+  //ΟΡΙΣΜΟΣ ΣΗΜΕΙΩΝ ΕΙΣΟΔΟΥ-ΕΞΟΔΟΥ
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+} 
+
+void loop() { 
+  eastLDR = analogRead(eLDRPin); //Διάβασμα τιμών των φωτοαντισάσεων
+  westLDR = analogRead(wLDRPin);
+  if (eastLDR < 400 && westLDR < 400) { // Ελέγχει αν υπάρχει χαμηλός φωτισμός και στις 2 φωτοαντιστάσεις
+    while (servoSet <=140 && servoSet>=15) 
+    { // σε αυτή την περίπτωση το πάνελ κινείται ανατολικά προς το ηλιοβασίλεμα
+      servoSet ++; 
+      servo.write(servoSet);
+      delay(100); 
+    } 
+  } 
+  difference = eastLDR - westLDR ; //Έλεγχος της διαφοράς 
+  if (difference > 10) { // Στέλνει το πάνελ προς τη φωτοαντίσταση με την υψηλότερη ένδειξη
+    if (servoSet <= 140) {  
+      servoSet ++; 
+      servo.write(servoSet); 
+    }
+  } 
+  else if (difference < -10) { 
+    if (servoSet >= 15) { 
+      servoSet --;
+      servo.write(servoSet);
+    }
+  } Serial.print(eastLDR); // Η σειριακή οθόνη μπορεί να είναι χρήσιμη για εντοπισμό σφαλμάτων 
+  Serial.print(" - "); 
+  Serial.print(westLDR); //Χρησιμοποιείται το για ελέγξετε αν οι φωτοαντιστάσεις έχουν μέγαλη διαφορά στην τιμή τους. Εάν ναι, διορθώνει την τιμή σφάλματος
+  Serial.print(" - "); 
+  Serial.print(difference);
+  Serial.print(" - "); 
+  Serial.print(servoSet); // Προσαρμογή ρυθμίσεων servo, για μεγιστοποίηση της διαθέσιμης ταλάντευση 
+  Serial.print(" - "); 
+  Serial.println(".");
+ 
+
+  // Ο αισθητήρας ενεργοποιείται από ψηλο παλμό 10 ή περισσότερων μικροδευτερολέπτων
+  // Δινει ένα σύντομο παλμό χαμηλού επιπέδου για να εξασφαλισθει καθαρός ψηλος παλμός
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  
+  // Διαβάζει το σήμα από τον αισθητήρα: ένας υψηλός παλμό του οποίου
+  // η διάρκεια είναι ο χρόνος (σε μικροδευτερόλεπτα) από την αποστολή
+  // του ping μεχρι τη λήψη της ηχώ από ένα αντικείμενο-εμποδιο.
+
+  pinMode(echoPin, INPUT);
+  duration = pulseIn(echoPin, HIGH);
+ 
+  // Μετατροπη χρόνου σε απόσταση
+  cm = (duration/2) / 29.1;     // ΔΙΑΙΡΕΣΗ ΜΕ 29.1 Η ΠΟΛΛΑΠΛΑΣΙΑΣΜΟΣ ΜΕ 0.0343
+  //Ελεγχει αν διερχεται αντικειμενο σε αποσταση μκροτερη απο 20cm και σκοταδι
+  if (cm<20 && westLDR<700)
+  {
+      digitalWrite(led, HIGH);//Αναβει ο φωτισμος
+  }
+  else
+  {
+      digitalWrite(led, LOW);//Σβηνει ο φωτισμος
+  }
+  Serial.print("Apostasi: ");
+  Serial.print(cm);
+  Serial.println("cm");
+  
+  delay(100);}
