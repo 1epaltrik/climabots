@@ -1,0 +1,44 @@
+const int hygrometer = A0;	
+int value;
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+const int motorPin = 10; // ΘΕΣΗ ΑΝΤΛΙΑΣ
+const int greenLed = 11; // ΘΕΣΗ ΠΡΑΣΙΝΗΣ ΛΑΜΠΑΣ
+const int redLed = 12; // ΘΕΣΗ ΚΟΚΚΙΝΗΣ ΛΑΜΠΑΣ
+void setup()
+{
+	Serial.begin(9600);
+  lcd.begin(16, 2);
+}
+
+void loop()
+{
+  lcd.clear();
+  value = analogRead(hygrometer);		 
+  value = constrain(value,400,1023);	
+  value = map(value,400,1023,100,0);	
+  Serial.print("Soil humidity: ");
+  Serial.print(value);
+  Serial.println("%");
+  lcd.setCursor(0, 0);
+  lcd.print("YGRASIA:");
+  lcd.setCursor(8, 0);
+  lcd.print(value);
+  lcd.print("%");
+  if (value < 65){
+    lcd.setCursor(0, 1);
+    lcd.print("THELEI POTISMA");
+    digitalWrite(motorPin, HIGH);  
+    digitalWrite(greenLed, HIGH);   
+    digitalWrite(redLed, LOW);  
+  }
+  else {
+    lcd.setCursor(0, 1);
+    lcd.print("EXEI ARKETO NERO");   
+    digitalWrite(motorPin, LOW); 
+    digitalWrite(greenLed, LOW);  
+    digitalWrite(redLed,HIGH);
+   }    
+	 delay(1000); 
+}
