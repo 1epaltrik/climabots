@@ -1,3 +1,4 @@
+//Μετράει την απόσταση και την εμφανίζει στο serial monitor
 
 int trigPin = 12;    // Trigger
 int echoPin = 11;    // Echo
