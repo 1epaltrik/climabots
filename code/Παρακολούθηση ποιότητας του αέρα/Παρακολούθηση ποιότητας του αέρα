@@ -77,6 +77,15 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 #define DHTTYPE DHT11   // DHT 11
 DHT dht(DHTPIN, DHTTYPE);
 
+int INA = 9; // ανεμιστηρας οροφης
+int INB = 8;
+ 
+void setup() 
+{ 
+
+}
+
+
 void setup()
 {
   dht.begin();
@@ -129,7 +138,8 @@ void setup()
     while (1); //Hang if there was a problem.
   }
 
-  
+  pinMode(INA,OUTPUT); // ανεμιστηρας
+  pinMode(INB,OUTPUT);   
 }
 
 
@@ -210,6 +220,18 @@ void loop()
     client.println("Connection: close");
     client.println();
   }
+
+  if( t > 26.0 )
+  {
+    digitalWrite(INA,HIGH);
+    digitalWrite(INB,LOW); 
+  }
+  else
+  {
+    digitalWrite(INA,LOW);
+    digitalWrite(INB,LOW); 
+  }
+  
 
   delay(5000);
 }
