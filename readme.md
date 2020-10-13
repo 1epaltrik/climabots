@@ -35,3 +35,5 @@ https://github.com/1epaltrik/climabots/tree/master/docs την έρευνα κα
 https://github.com/1epaltrik/climabots/tree/master/docs/fylla_ergasias αναλυτικά φύλλα εργασίας για κάθε κομμάτι του έργου
 
 https://github.com/1epaltrik/climabots/tree/master/code αρχεία κώδικα arduino (.ino), σχέδια fritzing (.fzz) και τρισδιάστατα μοντέλα (.stl)
+
+Tο βίντεο με λεπτομέρειες του έργου θα το βρείτε στην ιστοσελίδα: https://www.youtube.com/watch?v=gfDQ-s7UwWk&feature=youtu.be
