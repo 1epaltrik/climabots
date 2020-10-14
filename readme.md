@@ -20,17 +20,8 @@
 Η έρευνα που διεξήχθη, ο σχεδιασμός που έγινε, ο τρόπος που υλοποιήθηκαν οι διάφορες τεχνολογίες για τη μείωση του φαινομένου της κλιματικής αλλαγής καθώς και το αναλυτικό εκπαιδευτικό υλικό που αναπτύχθηκε βρίσκονται στο αποθετήριο github. Σύνδεσμος github https://github.com/1epaltrik/climabots
 
 Αναλυτικότερα, θα βρείτε στους παρακάτω συνδέσμους :
-
-https://github.com/1epaltrik/climabots/tree/master/docs την έρευνα και τη σχεδίαση-τρόπο υλοποίησης του έργου
-
-https://github.com/1epaltrik/climabots/tree/master/docs/fylla_ergasias αναλυτικά φύλλα εργασίας για κάθε κομμάτι του έργου
-
-https://github.com/1epaltrik/climabots/tree/master/code αρχεία κώδικα arduino (.ino), σχέδια fritzing (.fzz) και τρισδιάστατα μοντέλα (.stl)
+<ul><li>https://github.com/1epaltrik/climabots/tree/master/docs την έρευνα και τη σχεδίαση-τρόπο υλοποίησης του έργου</li>
+<li>https://github.com/1epaltrik/climabots/tree/master/docs/fylla_ergasias αναλυτικά φύλλα εργασίας για κάθε κομμάτι του έργου</li>
+<li>https://github.com/1epaltrik/climabots/tree/master/code αρχεία κώδικα arduino (.ino), σχέδια fritzing (.fzz) και τρισδιάστατα μοντέλα (.stl)</li></ul>
 
 Tο βίντεο με λεπτομέρειες του έργου θα το βρείτε στην ιστοσελίδα: https://www.youtube.com/watch?v=gfDQ-s7UwWk&feature=youtu.be
-
-<div>
- <iframe width="420" height="315"
-src="https://www.youtube.com/embed/gfDQ-s7UwWk&loop=1">
-</iframe> 
-</div>
