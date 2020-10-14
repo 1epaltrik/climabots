@@ -29,7 +29,8 @@ https://github.com/1epaltrik/climabots/tree/master/code αρχεία κώδικ�
 
 Tο βίντεο με λεπτομέρειες του έργου θα το βρείτε στην ιστοσελίδα: https://www.youtube.com/watch?v=gfDQ-s7UwWk&feature=youtu.be
 
-
+<div>
  <iframe width="420" height="315"
 src="https://www.youtube.com/embed/gfDQ-s7UwWk&loop=1">
 </iframe> 
+</div>
